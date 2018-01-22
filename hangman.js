@@ -1,51 +1,30 @@
-var fs = require('fs');
+var colors = require("colors")
 var inquirer = require("inquirer");
 var gameWords = require("./movie.js");
-gameNo = 1
+gameNo = 0
 var movieData = ""
 var newGame = ""
 game(gameNo)
 
+		function game(gameNo) {
+			  var newGame = gameWords.getGameData(gameNo, function(movieData) {
+			  	movieData.updateStage()
+			  	playGame(movieData)		    
+			  });
+		}
 
+		function playGame(movieData) {
+			 initGame(movieData.title,movieData.hint,movieData.displayStage,movieData.selectionStatus)
+		}
 
-function game(gameNo) {
-  var newGame = gameWords.getGameData(gameNo, function(movieData)
-  {
-  	movieData = JSON.parse(movieData)
-  	playGame(movieData) 
-    
-  });
-}
+		function initGame(title,hint,displayStage,selectionStatus) {
 
-function playGame(movieData) {
+				console.log("\n\n\n\t*********** +---\n\t* HANGMAN * |  @\n\t*********** | /|\\\n\t            | / \\".rainbow)
 
-	initGame(movieData.title,movieData.hint)
-
-}
-
-function initGame(title,hint) {
-		console.log("")
-		console.log("")
-		console.log("")
-		console.log("")
-		console.log("")
-		console.log("This is the start of Game "+gameNo);
-		console.log("----------------------------")
-		console.log("");
-		console.log("Here is a hint: "+hint)
-		
-	    openSelection = "[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]";
-        reg = new RegExp(openSelection, "g");
-        userChoice = "#";
-        updateStage(title)
-}
-
-function updateStage(title) {
-		reg = RegExp(userChoice, "g");
-		openSelection = openSelection.replace(reg,"#");
-
-		var reg = RegExp(openSelection, "g");
-		displayStage = title.replace(reg, "_");
-		console.log("")
-		console.log(displayStage)
-}
+				console.log("\n\tThis is the start of Game "+(gameNo+1));
+				console.log("\t----------------------------\n")
+				console.log("\tHere is a hint: "+hint+"\n")
+				
+		     	console.log("\n\t"+displayStage)
+		     	console.log("\n\t"+selectionStatus)
+		}
