@@ -11,12 +11,14 @@
 
               // get data for one game
               var data = data.split("|");
-              var gameDetails = data[gameNo].split("^")
 
-              var movieData = new GameData(gameDetails[0],gameDetails[1],data.length)
-             // movieData = JSON.stringify(movieData,null,2)
-              movieData.displayStage
-              callback(movieData)
+              for(i=0; i < data.length; i++) {
+      
+                    var gameDetails = data[i].split("^")
+                    var movieData = new GameData(gameDetails[0],gameDetails[1],data.length)
+                    gameDataArr.push(movieData)
+              }
+              callback(gameDataArr)
           });
     }
 
@@ -25,7 +27,7 @@
           this.hint  = hint;
           this.convTitle = this.title.toUpperCase();
           this.gameCount = gameCount;
-          this.attempts = 7;
+          this.attempts = 0;
           this.lettersUsed = "";
           this.openSelection = "[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]";
           this.userChoice = "#";
@@ -33,31 +35,6 @@
           this.selectionStatus = "";
           this.updateStage = function() {
 
-              this.selectionStatus = ""
-
-              this.userChoice = this.userChoice.toUpperCase()
-
-              if(this.lettersUsed.search(this.userChoice) != -1) {
-                    this.selectionStatus = "/n/tThis letter has been used before".yellow 
-              } else {
-                    this.lettersUsed = this.lettersUsed + this.userChoice;
-
-                    if(this.convTitle.search(this.userChoice) != -1) {
-                          this.selectionStatus = "/n/tYes. we found a hit!!"
-                    } else {
-
-                          // # is used to initialize the game and should not be
-                          // considered as an error
-                          if(this.userChoice != "#") { 
-                                this.attempts += 1;
-                                if(this.attempts == 7) {
-                                    this.selectionStatus = "/n/tSorry - You ran out of attempts/n/tThe Answer was "+this.title+" ".red
-                                } else {
-                                    this.selectionStatus = "/n/tThe letter " + this.userChoice + " is not in the movie title".yellow
-                                }
-                           }
-                    }
-              }
               // check the openselection to find if the letter is still in the
               // list. If it finds the letter, it will replace that letter with
               // a pound sign (#). The 'ig' option will replace all of the letters
@@ -82,6 +59,36 @@
 
               // clear for the next letter choice
               this.userChoice = ""     
+          };
+
+          this.checkEntry = function() {
+
+              this.selectionStatus = ""
+
+              this.userChoice = this.userChoice.toUpperCase()
+
+              if(this.lettersUsed.search(this.userChoice) != -1) {
+                    this.selectionStatus = "\n\tThis letter has been used before".yellow 
+              } else {
+                    this.lettersUsed = this.lettersUsed + this.userChoice;
+
+                    if(this.convTitle.search(this.userChoice) != -1) {
+                          this.selectionStatus = "\n\tYes. we found a hit!!"
+                    } else {
+
+                          // # is used to initialize the game and should not be
+                          // considered as an error
+                          if(this.userChoice != "#") { 
+                                this.attempts += 1;
+                                if(this.attempts == 7) {
+                                    this.selectionStatus = "\n\tSorry - You ran out of attempts\n\tThe Answer was '"+this.title+"'' ".red
+                                } else {
+                                    this.selectionStatus = "\n\tThe letter ".red + this.userChoice + " is not in the movie title".red+
+                                    "\n\t"+(7-this.attempts)+ " tries are left".red
+                                }
+                           }
+                    }
+              }
           };
     }
 

@@ -1,0 +1,24 @@
+{
+  "name": "hangmanconstructor",
+  "version": "1.0.0",
+  "description": "homework 11 - hangman construct",
+  "main": "hangman.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moffa1953/HangmanConstructor.git"
+  },
+  "author": "bill moffa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moffa1953/HangmanConstructor/issues"
+  },
+  "homepage": "https://github.com/moffa1953/HangmanConstructor#readme",
+  "dependencies": {
+    "clear-terminal": "0.0.2",
+    "colors": "^1.1.2",
+    "inquirer": "^5.0.1"
+  }
+}
